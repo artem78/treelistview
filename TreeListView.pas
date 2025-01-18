@@ -23,7 +23,9 @@ unit TreeListView;
                                  //is defined; it needs at least lazarus 9.27 (SVN, r16817)
 {$endif}
 {$ifdef lcl}
-  {$define openOwnPopupMenu}     //disable if you get 2 popupmenus (it is necessary in some lcl versions)
+  //{$IF LCL_FullVersion >= 2020400}
+  //{$define openOwnPopupMenu}     //disable if you get 2 popupmenus (it is necessary in some lcl versions)
+  //{$endif}
   {$define useRealClipping}        //old Lazarus/fpc don't support clipping (should work with (Lazarus  >= 19742 (0.9.27) and fpc >2.3.1) or (Lazarus > 20731 (0.9.27)))
 {$endif}
 
