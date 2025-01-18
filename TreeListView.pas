@@ -38,6 +38,8 @@ uses
   {$ifdef clr},types{$endif}
   {$ifdef lcl},LCLType,LCLIntf, LMessages{$else},windows,messages{$endif};
 
+const PACKAGE_VERSION = '1.0.0.repo';
+
 type
   {$TYPEINFO ON}
   //Forward
@@ -1442,6 +1444,7 @@ begin
     case TreeListView.Columns[column].Alignment of
       taLeftJustify: Result.Left:=result.Left+LEFT_TEXT_PADDING;
       taRightJustify: Result.Right:=result.Right-LEFT_TEXT_PADDING;
+      taCenter: ;
     end;
   end else if column=0 then
     Result.Left:=Result.Left+LEFT_TEXT_PADDING+GetExtraTextIndentation(column);
@@ -1874,6 +1877,7 @@ var i,ynew,yold,recordId:integer;
              MoveTo(tempX-5,yold);
              LineTo(tempX-5,yold+F_TreeListView.RowHeight div 2);
          end;
+        lmNone: ;
       end;
     end;
 
@@ -1961,6 +1965,7 @@ begin
                    LineTo(F_TreeListView.doubleBuffer.Width,ynew-1);
                  end;
         lmDot:   F_TreeListView.DrawAlignDotLine(0,ynew-1,F_TreeListView.doubleBuffer.Width,ynew-1,F_TreeListView.F_HorizontalLineColor);
+        lmNone: ;
       end;
     end;
 
@@ -2294,7 +2299,7 @@ begin
 
   if tlvoSorted in toAdd then sort;
 
-  if needRepaint then internRepaint;
+  if needRepaint then sheduleInternRepaint();
 end;
 
 procedure TTreeListView.SetOption(const Option: TTreeListViewOption;
@@ -2960,6 +2965,7 @@ begin
       temp.Right:=temp.right-LEFT_TEXT_PADDING;
     taLeftJustify:
       temp.Left:=temp.left+LEFT_TEXT_PADDING;
+    taCenter: ;
   end;
 
   if (temp.Left >= temp.Right) or (temp.Right <= 0) then exit;
@@ -3802,6 +3808,7 @@ begin
                        LineTo(xpos,doubleBuffer.Height);
                      end;
             lmDot:   DrawAlignDotLine(xpos,F_VScroll.Top,xpos,doubleBuffer.Height,VerticalLineColor);
+            lmNone: ;
           end;
         end;
       end;
